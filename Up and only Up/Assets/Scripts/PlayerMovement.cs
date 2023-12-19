@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _jumpForce;
+    public float movement;
 
     [Header("Components")]
 
@@ -17,27 +18,32 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         Move();
+        Jump();
     }
 
     private void Move()
     {
-       _rigitbody.velocity = new Vector2(Input.acceleration.x * _moveSpeed, _rigitbody.velocity.y);
+        movement = Input.GetAxis("Horizontal");
+        transform.position += new Vector3(movement, 0, 0) * _moveSpeed * Time.deltaTime;
 
-       CheckFlip();
+        CheckFlip();
     }
 
     public void Jump()
     {
-        _rigitbody.velocity = new Vector2(_rigitbody.velocity.x, _jumpForce);
+        if(Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(_rigitbody.velocity.y ) < 0.05f)
+        {
+            _rigitbody.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
+        }
     }
 
     private void CheckFlip()
     {
-        if(Input.acceleration.x > 0 && !_lookRight)
+        if(movement < 0 && !_lookRight)
         {
             Flip();
         }
-        else if(Input.acceleration.x < 0 && _lookRight)
+        else if(movement > 0 && _lookRight)
         {
             Flip();
         }
