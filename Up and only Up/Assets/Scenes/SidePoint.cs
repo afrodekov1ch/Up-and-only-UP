@@ -25,5 +25,5 @@ public class SidePoint : MonoBehaviour
         }
     }
 
-    private void MoveToOppositePoint() => _target/position = new Vector2(_oppositePoint.position.x, _target.position.y);
+    private void MoveToOppositePoint() => _target.position = new Vector2(_oppositePoint.position.x, _target.position.y);
 }
