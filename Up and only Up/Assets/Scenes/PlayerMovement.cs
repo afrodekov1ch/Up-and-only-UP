@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Playermovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [Header("Settings")]
 
