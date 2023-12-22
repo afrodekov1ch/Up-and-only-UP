@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Settings")]
 
     [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _jumpForce;
+    public float _jumpForce;
     public float movement;
 
     [Header("Components")]
@@ -15,12 +15,19 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private bool _lookRight;
 
-    private void Update()
+    private void FixedUpdate()
     {
         Move();
-        Jump();
+        
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            Jump();
+        }
+    }
     private void Move()
     {
         movement = Input.GetAxis("Horizontal");
@@ -31,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(_rigitbody.velocity.y ) < 0.05f)
+        if(Mathf.Abs(_rigitbody.velocity.y ) < 0.05f)
         {
             _rigitbody.AddForce(new Vector2(0, _jumpForce), ForceMode2D.Impulse);
         }
